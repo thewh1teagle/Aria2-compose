@@ -1,43 +1,41 @@
-Languages: [English](https://github.com/alanzhangzm/Photon-WebUI) [中文](https://github.com/alanzhangzm/Photon-WebUI/blob/master/README.zh-CN.md)
+# Aria2-compose  
+(Very) lightweight aria2 server with webUI and optimization  
+Based on [Photon-WebUI](https://github.com/zmzhang8/Photon-WebUI)
 
-# Photon WebUI
+- `arm` image, you can run it on Raspberry PI!
+- approximately `13mb` total footprint on your hard drive!
 
-*Photon WebUI* is a modern frontend for [aria2](https://github.com/aria2/aria2).
+# Setup
+Copy this compose file and paste it in your perfered directory  
+```yaml
+version: '3.1'
+services:
+  aria2:
+    image: thewh1teagle/aria2
+    volumes:
+      - ./downloads:/app/downloads
+    ports:
+      - 6801:6800
+  web:
+    image: thewh1teagle/photon-webui
+    ports:
+      - 3000:3000
 
-For desktop downloader, please have a look at [*Photon*](https://github.com/alanzhangzm/Photon).
+```
+You can specify different downloads folder on your system, instead of `./downloads`  
+In the same directory of `docker-compose.yaml` execute the following  
+`docker compose up`
 
-
-## Use
-
-Visit https://github.com/zmzhang8/Photon-WebUI
-
-## Feature
-
-- Manage multiple aria2 servers
-- BT: selective downloading
-
+## Gotchas
+For some reason on Raspberry PI I got permission denied when trying to write to `downloads` volume.  
+The solution is to create the folder before running `docker compose up` and give it the right permission
+```
+mkdir dodwnloads
+sudo chmod 777 downloads
+docker compose up
+```
 
 ## Screenshots
 
-![downloading](screenshot/downloading.png)
-![settings](screenshot/settings.png)
-![torrent](screenshot/torrent.png)
 
-## Development
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run serve
-
-# build for production with minification
-npm run build
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
-
-## License
-[Apache-2.0](https://github.com/alanzhangzm/Photon-WebUI/blob/master/LICENSE)
+<img src="screenshot/downloading.png" width="80%" height="80%"></img>

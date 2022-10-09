@@ -1,8 +1,8 @@
 import Aria2RPC from './aria2rpc'
 
 const defaultRPC = {
-  host: '127.0.0.1',
-  port: '6800',
+  host: window.location.hostname,
+  port: '6801',
   token: '',
   encryption: false
 }
